@@ -1230,6 +1230,33 @@ button:focus-visible, a:focus-visible  {
 
   <script>
 
+(function () {
+  function showWebsite() {
+    var opening = document.getElementById("opening");
+
+    if (opening) {
+      opening.classList.add("gone");
+      opening.style.opacity = "0";
+      opening.style.visibility = "hidden";
+      opening.style.pointerEvents = "none";
+    }
+
+    if (document.body) {
+      document.body.classList.remove("locked");
+      document.body.style.overflowY = "auto";
+    }
+  }
+
+  // Reveal the website even if another script fails.
+  setTimeout(showWebsite, 2500);
+  window.addEventListener("DOMContentLoaded", showWebsite, {
+    once: true
+  });
+  window.addEventListener("load", showWebsite, {
+    once: true
+  });
+})();
+
 
   // Load all gallery images immediately and in parallel.
   const gallery = $('#gallery');
