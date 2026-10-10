@@ -1480,6 +1480,27 @@ const SITE_SETTINGS = {
   <audio autoplay="" id="bgMusic" loop="" preload="auto">
   </audio>
   <script>
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Find every image in the gallery
+  const galleryImages = document.querySelectorAll(
+    "#gallery img, .gallery img"
+  );
+
+  galleryImages.forEach(function (img) {
+    // Start loading images immediately
+    img.loading = "eager";
+    img.fetchPriority = "high";
+    img.decoding = "async";
+
+    // If the image uses data-src, activate it
+    if (img.dataset.src && !img.getAttribute("src")) {
+      img.src = img.dataset.src;
+    }
+  });
+});
+
+
 (() => {
  const $ = s => document.querySelector(s), settings = SITE_SETTINGS;
  const escapeHTML = v => String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
