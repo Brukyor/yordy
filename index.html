@@ -1231,6 +1231,21 @@ button:focus-visible, a:focus-visible  {
   <script>
 
 (function () {
+  function removeOpeningScreen() {
+    var screen = document.getElementById("opening");
+    if (screen) {
+      screen.classList.add("gone");
+      screen.style.display = "none";
+    }
+    document.body.classList.remove("locked");
+    document.body.style.overflow = "auto";
+  }
+
+  setTimeout(removeOpeningScreen, 3000);
+})();
+
+
+(function () {
   function showWebsite() {
     var opening = document.getElementById("opening");
 
