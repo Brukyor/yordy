@@ -1230,6 +1230,50 @@ button:focus-visible, a:focus-visible  {
 
   <script>
 
+
+  // Load all gallery images immediately and in parallel.
+  const gallery = $('#gallery');
+  const photoList = settings.photos.slice(0, 6);
+
+  photoList.forEach((photo, i) => {
+    const card = document.createElement('button');
+    card.className = 'photo';
+    card.type = 'button';
+    card.setAttribute('aria-label', 'View photo: ' + photo.caption);
+
+    const img = document.createElement('img');
+    img.alt = photo.caption;
+    img.loading = 'eager';
+    img.decoding = 'async';
+    img.fetchPriority = i < 2 ? 'high' : 'auto';
+
+    // Start loading the actual image directly—no filename testing.
+    let shown = photo.url;
+    img.src = photo.url;
+
+    const heart = document.createElement('span');
+    heart.className = 'heart';
+    heart.textContent = '♡';
+
+    const cap = document.createElement('div');
+    cap.className = 'caption';
+    cap.textContent = photo.caption;
+
+    card.append(heart, img, cap);
+
+    card.addEventListener('click', () => {
+      $('#lightboxImage').src = shown;
+      $('#lightboxImage').alt = photo.caption;
+      $('#lightbox').classList.add('show');
+    });
+
+    gallery.appendChild(card);
+  });
+
+
+
+
+
 (function () {
   function hideLoadingScreen() {
     var loader = document.getElementById("opening");
