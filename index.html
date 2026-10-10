@@ -1229,6 +1229,34 @@ button:focus-visible, a:focus-visible  {
  <body class="locked">
 
   <script>
+
+(function () {
+  function hideLoadingScreen() {
+    var loader = document.getElementById("opening");
+
+    if (loader) {
+      loader.classList.add("gone");
+    }
+
+    document.body.classList.remove("locked");
+  }
+
+  // Hide the loader after 5 seconds, regardless of other scripts.
+  setTimeout(hideLoadingScreen, 5000);
+
+  // Hide it sooner if the page finishes loading.
+  window.addEventListener("load", function () {
+    setTimeout(hideLoadingScreen, 500);
+  });
+
+  // Safety fallback if the browser restores the page.
+  window.addEventListener("pageshow", function () {
+    setTimeout(hideLoadingScreen, 5000);
+  });
+})();
+
+
+
 const SITE_SETTINGS = {
   bestFriendName: "My Best Friend,                                                            Yene Yordy!",
   yourName: "Your's Bruk",
